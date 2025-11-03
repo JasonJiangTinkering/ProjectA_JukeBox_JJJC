@@ -1,5 +1,8 @@
 goalset2_makejar:
-	jar cfe 
+	jar cvfe testGoal2.jar paymentLauncher *.class *.java
+
+goalset2_runjar:
+	java -jar testGoal2.jar
 
 goalset2_compilejava: 
 	javac paymentLauncher.java

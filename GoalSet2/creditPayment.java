@@ -1,8 +1,9 @@
+package GoalSet2;
 import java.util.Scanner;
 
 /**
  * Jukebox class to model credit payment
- * @author Jason Jiang, Joel Cipher
+ * @author Jason Jiang
  * @version 1.0
  */
 

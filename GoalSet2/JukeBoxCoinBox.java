@@ -1,8 +1,9 @@
+package GoalSet2;
 
 /**
  * JukeBox Coin Box
  * Simple coin box for Jukebox
- * @author Jason Jiang, Joel Cipher
+ * @author Jason Jiang
  * @version 1.0
  */
 

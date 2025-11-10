@@ -1,0 +1,8 @@
+Bohemian Rhapsody,Queen,1.50,bohemian_rhapsody.mp3
+Imagine,John Lennon,1.25,imagine.mp3
+Billie Jean,Michael Jackson,1.50,billie_jean.mp3
+Hotel California,Eagles,1.75,hotel_california.mp3
+Smells Like Teen Spirit,Nirvana,1.50,teen_spirit.mp3
+Sweet Child O Mine,Guns N Roses,1.50,sweet_child.mp3
+Stairway to Heaven,Led Zeppelin,2.00,stairway.mp3
+Purple Rain,Prince,1.50,purple_rain.mp3

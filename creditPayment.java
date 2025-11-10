@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * Jukebox credit payment
+ * Jukebox class to model credit payment
  * @author Jason Jiang, Joel Cipher
  * @version 1.0
  */

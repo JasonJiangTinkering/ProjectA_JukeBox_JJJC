@@ -1,19 +1,18 @@
 goalset2_makejar:
-	jar cvfe testGoal2.jar paymentLauncher *.class *.java
+	jar cvfe testGoal2.jar balanceBox *.class *.java
 
 goalset2_runjar: testGoal2.jar
 	java -jar testGoal2.jar
 
-goalset2_jar:  goalset2_makejar goalset2_runjar
-goalset2_compilejava:  paymentLauncher.java
-
-	find --name *.java > temp.txt
+goalset2_jar:  goalset2_compilejava goalset2_makejar goalset2_runjar
+goalset2_compilejava:  balanceBox.java
+	find *.java > temp.txt
 	javac @temp.txt
-	javac paymentLauncher.java 
+	javac balanceBox.java 
 	
 
-goalset2_runjava: paymentLauncher.class
-	java paymentLauncher
+goalset2_runjava: balanceBox.class
+	java balanceBox
 
 goalset2_run: goalset2_compilejava goalset2_runjava
 	

@@ -14,15 +14,14 @@ class cashPayment implements paymentLauncher{
         Scanner in = new Scanner(System.in);
         int changedValue = 0;
         //System.out.println(coinLetter);
-        System.out.print("Enter a coin ('p', 'n', 'd', 'q', 'h', 'g')");
-        char coinLetter = in.next().charAt(0);
-        in.close();
-        switch (coinLetter){
+        System.out.print("Type a coin and hit enter ('p', 'n', 'd', 'q', 'h', 'g')");
+        char choice = in.nextLine().charAt(0);
+        switch (choice){
             case 'V':
                 System.out.println("You have decided to vend");
                 break;
             default:
-                changedValue = coinBox.acceptCoin(coinLetter);
+                changedValue = coinBox.acceptCoin(choice);
         }
         // Balance
         // System.out.printf("Your balance is $%.2f%n", money);

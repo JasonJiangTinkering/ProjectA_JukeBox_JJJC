@@ -1,4 +1,3 @@
-package GoalSet2;
 import java.util.Scanner;
 
 /**
@@ -29,6 +28,7 @@ class cashPayment implements paymentLauncher{
         return changedValue;
         
     }
+    // returns money subtracted from cost_in_cents
     public int subtractCertainBalance(int cost_in_cents){
         return coinBox.subtractCertainBalance(cost_in_cents);
     }

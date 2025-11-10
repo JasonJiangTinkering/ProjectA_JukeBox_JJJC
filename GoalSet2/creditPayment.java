@@ -1,4 +1,3 @@
-package GoalSet2;
 import java.util.Scanner;
 
 /**
@@ -27,10 +26,9 @@ public class creditPayment implements paymentLauncher{
     public int subtractCertainBalance(int cost_in_cents){
         if (money >= cost_in_cents){
             money -= cost_in_cents;
-            return 0;
+            return cost_in_cents;
         }
-        money = 0;
-        return cost_in_cents - money;
+        return money;
     }
     
     @Override

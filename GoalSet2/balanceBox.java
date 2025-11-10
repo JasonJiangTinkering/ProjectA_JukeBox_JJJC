@@ -1,4 +1,3 @@
-package GoalSet2;
 import java.util.Scanner;
 
 /**
@@ -26,12 +25,12 @@ public class balanceBox {
 
         SongList songList = new SongList("songs.txt");
         String[][] songArray = songList.getSongArray();
-        System.out.println("Display Songs: choose from 1 - " + songArray.length + " then hit enter");
+        System.out.println("Display Songs: choose from 0 - " + (songArray.length-1) + " then hit enter");
         System.out.println(songList.displaySongs());
         Scanner in = new Scanner(System.in);
-        int choice = Integer.getInteger(in.nextLine());
+        int choice = in.nextInt();
         assert (choice-1 < songArray.length && choice-1 >=0) == true;
-        while (!b.deductFunds(Integer.getInteger(songArray[choice][2]))){
+        while (!b.deductFunds((int)Double.parseDouble(songArray[choice][2]) * 100)){
             b.addFunds();
         }
 
@@ -42,12 +41,12 @@ public class balanceBox {
     public void addFunds(){
         System.out.println("Add funds.\nType 1 + Enter for cash payment.\nType 2 + Enter for credit payment.\n:>");
         Scanner in = new Scanner(System.in);
-        char choice = in.nextLine().charAt(0);
-        switch (choice){
-            case '1':
+        String choice = in.nextLine();
+        switch (choice.strip()){
+            case "1":
                 total_available_cents += cashPaymentInst.takePayment();
                 break;
-            case '2':
+            case "2":
                 total_available_cents += creditPaymentInst.takePayment();
                 break;
             default:
@@ -58,13 +57,18 @@ public class balanceBox {
 
     public Boolean deductFunds(int cost_in_cents){
         if (total_available_cents >= cost_in_cents){
-            total_available_cents -= cost_in_cents;
             // try to subtract from pool of cash balance
-            cost_in_cents = cashPaymentInst.subtractCertainBalance(cost_in_cents);
-            cost_in_cents = creditPaymentInst.subtractCertainBalance(cost_in_cents);
+            int subtractedAmount = cashPaymentInst.subtractCertainBalance(cost_in_cents);
+            cost_in_cents -= subtractedAmount;
+            total_available_cents -= subtractedAmount;
+            subtractedAmount = creditPaymentInst.subtractCertainBalance(cost_in_cents);
+            cost_in_cents -= subtractedAmount;
+            total_available_cents -= subtractedAmount;
             if (cost_in_cents>0){
                 System.out.println("Error: Sum of Coin + Cash balances both are capable and uncapable of paying balance.");
             }
+            System.out.println("Thanks for the purchase");
+            System.out.println("Your remaining balance is $"+ String.format("%.2f", ((double)total_available_cents)/100));
             return true;
         }
         return false;

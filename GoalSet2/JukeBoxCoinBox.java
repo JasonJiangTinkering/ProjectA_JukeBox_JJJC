@@ -1,4 +1,3 @@
-package GoalSet2;
 
 /**
  * JukeBox Coin Box
@@ -39,12 +38,13 @@ public class JukeBoxCoinBox {
     }
 
     public int subtractCertainBalance(int cost_in_cents){
+        int startingValue = cost_in_cents;
         for (int i = 0; i < changeSet.length; i++){
             int spentAmount = cost_in_cents / acceptable_coin_vals[i];
             cost_in_cents -= spentAmount * acceptable_coin_vals[i];
             changeSet[i] -= spentAmount;
         }
-        return cost_in_cents;
+        return startingValue-cost_in_cents;
     }
     public String dispenseChange(){
 

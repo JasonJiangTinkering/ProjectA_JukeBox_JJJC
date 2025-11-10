@@ -1,4 +1,3 @@
-package GoalSet2;
 
 import java.io.*;
 import java.net.URI;

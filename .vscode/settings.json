@@ -1,0 +1,18 @@
+{
+    "java.project.sourcePaths": [
+        "GoalSet1",
+        "GoalSet2",
+        "GoalSet3",
+        "GoalSet5"
+    ],
+    "java.project.referencedLibraries": [
+        "/Users/cipher/Documents/javafx-sdk-21.0.9/lib/javafx.web.jar",
+        "/Users/cipher/Documents/javafx-sdk-21.0.9/lib/javafx.swing.jar",
+        "/Users/cipher/Documents/javafx-sdk-21.0.9/lib/javafx.media.jar",
+        "/Users/cipher/Documents/javafx-sdk-21.0.9/lib/javafx-swt.jar",
+        "/Users/cipher/Documents/javafx-sdk-21.0.9/lib/javafx.base.jar",
+        "/Users/cipher/Documents/javafx-sdk-21.0.9/lib/javafx.controls.jar",
+        "/Users/cipher/Documents/javafx-sdk-21.0.9/lib/javafx.fxml.jar",
+        "/Users/cipher/Documents/javafx-sdk-21.0.9/lib/javafx.graphics.jar"
+    ]
+}

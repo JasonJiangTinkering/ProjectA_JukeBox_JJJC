@@ -38,7 +38,6 @@ public class JukeBoxCoinBox {
     }
 
     public int subtractCertainBalance(int cost_in_cents){
-        /* 
         int startingValue = cost_in_cents;
         for (int i = 0; i < changeSet.length; i++){
             int spentAmount = cost_in_cents / acceptable_coin_vals[i];
@@ -46,37 +45,9 @@ public class JukeBoxCoinBox {
             changeSet[i] -= spentAmount;
         }
         return startingValue-cost_in_cents;
-        */
-        int totalAvailable = changeValue();  // total cents in the box
-        
-        if (totalAvailable >= cost_in_cents) {
-            // Can pay the full amount
-            // Just subtract from the largest coins first
-            int remaining = cost_in_cents;
-            
-            for (int i = changeSet.length - 1; i >= 0; i--) {
-                if (remaining == 0) break;
-                
-                int coinsNeeded = remaining / acceptable_coin_vals[i];
-                int coinsToUse = Math.min(coinsNeeded, changeSet[i]);
-                
-                remaining -= coinsToUse * acceptable_coin_vals[i];
-                changeSet[i] -= coinsToUse;
-            }
-            
-            return cost_in_cents;  // paid in full
-        } else {
-            // Can't pay the full amount, pay what we can
-            int paid = totalAvailable;
-            // Clear all coins
-            for (int i = 0; i < changeSet.length; i++) {
-                changeSet[i] = 0;
-            }
-            return paid;
-        }
     }
     public String dispenseChange(){
-        /** 
+
         String outputStrings = "";
         int money = changeValue();
         outputStrings += "Golden Dollars: " + Math.min(money / 100, changeSet[5]) + ", ";
@@ -100,54 +71,6 @@ public class JukeBoxCoinBox {
         if (money >0){
             System.out.println("Could not dispense enough coins, IOU: " + money + " cents");
         }
-        return outputStrings;
-        **/
-
-        String outputStrings = "";
-        int money = changeValue();
-
-        int coinsToGive;
-
-        // Golden Dollars (index 5, value 100)
-        coinsToGive = Math.min(money / 100, changeSet[5]);
-        outputStrings += "Golden Dollars: " + coinsToGive + ", ";
-        money -= coinsToGive * 100;
-        changeSet[5] -= coinsToGive;
-
-        // Half Dollars (index 4, value 50)
-        coinsToGive = Math.min(money / 50, changeSet[4]);
-        outputStrings += "Half Dollars: " + coinsToGive + ", ";
-        money -= coinsToGive * 50;
-        changeSet[4] -= coinsToGive;
-
-        // Quarter (index 3, value 25)
-        coinsToGive = Math.min(money / 25, changeSet[3]);
-        outputStrings += "Quarter: " + coinsToGive + ", ";
-        money -= coinsToGive * 25;
-        changeSet[3] -= coinsToGive;
-
-        // Dime (index 2, value 10)
-        coinsToGive = Math.min(money / 10, changeSet[2]);
-        outputStrings += "Dime: " + coinsToGive + ", ";
-        money -= coinsToGive * 10;
-        changeSet[2] -= coinsToGive;
-
-        // Nickel (index 1, value 5)
-        coinsToGive = Math.min(money / 5, changeSet[1]);
-        outputStrings += "Nickel: " + coinsToGive + ", ";
-        money -= coinsToGive * 5;
-        changeSet[1] -= coinsToGive;
-
-        // Penny (index 0, value 1)
-        coinsToGive = Math.min(money, changeSet[0]);
-        outputStrings += "Penny: " + coinsToGive + ", ";
-        money -= coinsToGive * 1;
-        changeSet[0] -= coinsToGive;
-
-        if (money > 0) {
-            System.out.println("Could not dispense enough coins, IOU: " + money + " cents");
-        }
-
         return outputStrings;
     }
 }

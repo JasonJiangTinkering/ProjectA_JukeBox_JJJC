@@ -33,6 +33,7 @@ public class balanceBox {
         while (!b.deductFunds((int)Double.parseDouble(songArray[choice][2]) * 100)){
             b.addFunds();
         }
+        in.close();
 
     }
         
@@ -53,6 +54,7 @@ public class balanceBox {
                 System.out.println("Please pick either 1 or 2");
         }
         System.out.printf("Your balance is $%.2f%n", ((double)total_available_cents) /100);
+        in.close();
     }
 
     public Boolean deductFunds(int cost_in_cents){

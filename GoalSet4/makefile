@@ -1,3 +1,16 @@
+# Goal set 4
+# Make sure to run makefile with your own .env file
+include .env
+goalset4_runjava: goalset4_compilejava SongPlayer.class 
+	java --module-path ${sdkPath}/lib --add-modules javafx.controls,javafx.media,javafx.graphics SongPlayer
+
+goalset4_compilejava: SongPlayer.java .env
+	find *.java > temp.txt
+	javac --module-path ${sdkPath}/lib --add-modules javafx.controls,javafx.media,javafx.graphics @temp.txt
+
+
+# Goal Set 2
+
 goalset2_makejar:
 	jar cvfe testGoal2.jar balanceBox *.class *.java
 

@@ -19,6 +19,7 @@ public class creditPayment implements paymentLauncher{
         
         // Balance
         // System.out.printf("Your balance is $%.2f%n", money);
+        in.close();
         return amountInCents;
         
     }

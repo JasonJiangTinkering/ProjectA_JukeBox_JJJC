@@ -47,6 +47,8 @@ public class JukeBoxCoinBox {
         }
         return startingValue-cost_in_cents;
         */
+
+        
         int totalAvailable = changeValue();  // total cents in the box
         
         if (totalAvailable >= cost_in_cents) {
@@ -74,6 +76,8 @@ public class JukeBoxCoinBox {
             }
             return paid;
         }
+        
+        
     }
     public String dispenseChange(){
         /** 

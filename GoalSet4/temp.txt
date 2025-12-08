@@ -1,3 +1,4 @@
+GoalSet4.java
 JukeBoxCoinBox.java
 SongList.java
 SongPlayer.java

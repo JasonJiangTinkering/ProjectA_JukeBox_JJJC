@@ -3,28 +3,18 @@ import javafx.scene.media.MediaPlayer;
 import java.io.File;
 import javafx.application.Application;
 import javafx.stage.Stage;
+// This java class is only a helpful class meant to be held by a running program
 public class SongPlayer extends Application{
-
-    
-    // queue
-    public static void main(String[] args){
-        launch(args);
-        
-    }
+    Media song;
+    MediaPlayer mediaPlayer;
 
     @Override
     public void start(Stage stage){
         stage.setTitle("Goalset4: Testing Music");
-        String  songName = "media/happy_birthday.mp3";
-        Media song = new Media(new File(songName).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(song);
-        
-        popQueuePlaySong(mediaPlayer, song);
-
+        popQueuePlaySong("media/happy_birthday.mp3");
     }
 
-    public static void popQueuePlaySong(MediaPlayer mediaPlayer, Media song){
-        String  songName = "media/happy_birthday.mp3";
+    public void popQueuePlaySong(String songName){
         song = new Media(new File(songName).toURI().toString());
         mediaPlayer = new MediaPlayer(song);
         

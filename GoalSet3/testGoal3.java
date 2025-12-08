@@ -1,14 +1,13 @@
 /**
- * Testing program for Goal 3 - Song Queue
- * Tests purchasing songs, managing the queue, and refunds
- * 
- * @author Joel Cipher
- * @version 1.0
- */
-public class testGoal3 {
-    
-    public static void main(String[] args) {
+* Testing program for Goal 3 - Song Queue
+* Tests purchasing songs, managing the queue, and refunds
+*
+* @author Joel Cipher
+* @version 1.0
+*/
 
+public class testGoal3 {
+    public static void main(String[] args) {
         String songsFile = args[0];
         System.out.println("Loading songs from: " + songsFile);
         System.out.println();
@@ -32,17 +31,33 @@ public class testGoal3 {
         queue.addSong(0);
         System.out.println();
         
-        // add some money
+        // add some money and buy songs
         System.out.println("Test 2: Add money and buy songs");
         System.out.println("Adding funds...");
         balance.addFunds();
         System.out.println();
         
-        // buy a few songs
+        // buy songs with the "keep adding until enough" pattern
         System.out.println("Purchasing songs...");
-        queue.addSong(0);  // Bohemian Rhapsody
-        queue.addSong(1);  // Imagine
-        queue.addSong(2);  // Billie Jean
+        
+        // Try to buy song 0 (Bohemian Rhapsody)
+        while (!queue.addSong(0)) {
+            System.out.println("Not enough funds. Add more:");
+            balance.addFunds();
+        }
+        
+        // Try to buy song 1 (Imagine)
+        while (!queue.addSong(1)) {
+            System.out.println("Not enough funds. Add more:");
+            balance.addFunds();
+        }
+        
+        // Try to buy song 2 (Billie Jean)
+        while (!queue.addSong(2)) {
+            System.out.println("Not enough funds. Add more:");
+            balance.addFunds();
+        }
+        
         System.out.println();
         
         // show the queue
@@ -73,4 +88,3 @@ public class testGoal3 {
         System.out.println("All tests done!");
     }
 }
-

@@ -128,7 +128,7 @@ public class SongList {
         }
         
         // Create URI with file:// protocol for local files
-        return URI.create("file://./" + songs[index].fileName);
+        return URI.create("file://" + System.getProperty("user.dir") + "/"+ songs[index].fileName);
     }
     
     /**

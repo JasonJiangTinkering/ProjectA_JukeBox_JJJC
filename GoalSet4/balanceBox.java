@@ -33,7 +33,6 @@ public class balanceBox {
         while (!b.deductFunds((int)Double.parseDouble(songArray[choice][2]) * 100)){
             b.addFunds();
         }
-        in.close();
 
     }
         
@@ -54,10 +53,10 @@ public class balanceBox {
                 System.out.println("Please pick either 1 or 2");
         }
         System.out.printf("Your balance is $%.2f%n", ((double)total_available_cents) /100);
-        in.close();
     }
 
     public Boolean deductFunds(int cost_in_cents){
+        /* 
         if (total_available_cents >= cost_in_cents){
             // try to subtract from pool of cash balance
             int subtractedAmount = cashPaymentInst.subtractCertainBalance(cost_in_cents);
@@ -74,5 +73,54 @@ public class balanceBox {
             return true;
         }
         return false;
+        */
+        if (total_available_cents >= cost_in_cents){
+            int originalCost = cost_in_cents;
+
+            // try cash
+            int subtractedAmount = cashPaymentInst.subtractCertainBalance(cost_in_cents);
+            cost_in_cents -= subtractedAmount;
+
+            // try credit
+            subtractedAmount = creditPaymentInst.subtractCertainBalance(cost_in_cents);
+            cost_in_cents -= subtractedAmount;
+
+            // if not fully paid, fail WITHOUT changing total_available_cents
+            if (cost_in_cents > 0){
+                System.out.println("Error: Sum of Coin + Cash balances could not fully pay balance.");
+                return false;
+            }
+
+            // success: now subtract from total_available_cents
+            total_available_cents -= originalCost;
+            System.out.println("Thanks for the purchase");
+            System.out.println("Your remaining balance is $" +
+                String.format("%.2f", ((double)total_available_cents)/100));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns leftover money to the user
+     * @return message about the refund
+     */
+    public String returnFunds() {
+        // get refund info from both payment types
+        String cashRefund = cashPaymentInst.returnFunds();
+        String creditRefund = creditPaymentInst.returnFunds();
+        
+        // convert cents back to dollars
+        double totalDollars = total_available_cents / 100.0;
+        
+        String message = "Refunding your balance: $" + String.format("%.2f", totalDollars) + "\n";
+        message = message + cashRefund + "\n" + creditRefund;
+        
+        // clear out the balance
+        total_available_cents = 0;
+        
+        return message;
     }
 }
+
+

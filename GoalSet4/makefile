@@ -2,7 +2,7 @@
 # Make sure to run makefile with your own .env file
 include .env
 goalset4_runjava: goalset4_compilejava GoalSet4.class 
-	java --module-path ${sdkPath}/lib --add-modules javafx.controls,javafx.media,javafx.graphics GoalSet4
+	java --module-path ${sdkPath}/lib --add-modules javafx.controls,javafx.media,javafx.graphics GoalSet4 songs.txt
 
 goalset4_compilejava: GoalSet4.java .env
 	find *.java > temp.txt

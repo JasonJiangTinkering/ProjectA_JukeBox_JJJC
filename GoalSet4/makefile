@@ -8,11 +8,19 @@ goalset4_compilejava: GoalSet4.java .env
 	find *.java > temp.txt
 	javac --module-path ${sdkPath}/lib --add-modules javafx.controls,javafx.media,javafx.graphics @temp.txt
 
+goalset4_makejar: 
+	jar cvfe testGoal4.jar GoalSet4 *.class *.java
+
+goalset4_runjar: 
+	java --module-path ${sdkPath}/lib --add-modules javafx.controls,javafx.media,javafx.graphics -jar testGoal4.jar songs.txt
+# 	find ${sdkPath}/lib/{javafx.controls.jar,javafx.media.jar,javafx.graphics.jar} -exec unzip -nq {} -d out \;
+# 	cp ${sdkPath}/lib/{libprism*.so,libjavafx*.so,libglass*.co,libdecora_sse.so} out
 
 # Goal Set 2
 
 goalset2_makejar:
 	jar cvfe testGoal2.jar balanceBox *.class *.java
+
 
 goalset2_runjar: testGoal2.jar
 	java -jar testGoal2.jar

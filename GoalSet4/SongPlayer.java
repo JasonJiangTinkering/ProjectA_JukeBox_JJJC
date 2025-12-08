@@ -35,6 +35,7 @@ public class SongPlayer extends Application{
         queue.addSongForFree(0);
         queue.addSongForFree(1);
         queue.addSongForFree(2);
+        queue.addSongForFree(3);
 
 
         // balance.addFunds();
@@ -95,7 +96,7 @@ public class SongPlayer extends Application{
 
 
 // once song over, try to play next.
-        System.out.println("All tests done!");
+        System.out.println("All sync commands ran, wait for songs to play, for tests done!");
 
     }
 // Idea of using recursion to generate media players over and over inspired by 
@@ -103,11 +104,13 @@ public class SongPlayer extends Application{
     public void endOfMediaNextSong(){
         if (queue.getQueueSize() > 0){
             popQueuePlaySong();
+        }else{
+            System.out.println("End of Queue Thank you.");
         }
 // not learned in class yet, the double colon operator, in the case of [A]::[B]
 // point at the method B in class A.
 // This is a callback funnction, so when the media player is over, it can call that function and boom new song.
-        mediaPlayer.setOnEndOfMedia(this::endOfMediaNextSong);
+        
     }
 
     public void popQueuePlaySong(){
@@ -118,7 +121,9 @@ public class SongPlayer extends Application{
         System.out.println(x);
         song = new Media(x);
         mediaPlayer = new MediaPlayer(song);
+        mediaPlayer.setAutoPlay(true);
         mediaPlayer.play();
+        mediaPlayer.setOnEndOfMedia(this::endOfMediaNextSong);
         System.out.println(queue.displayQueue());
 
     }

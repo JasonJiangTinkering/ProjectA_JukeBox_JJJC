@@ -1,0 +1,4 @@
+sdkPath=/home/jason/CS701/SDK/javafx-sdk-21.0.9
+# example sdkPath enviormental variable
+# copy your enviormental variable declaration to a ".env" file before running make file
+# the makefile will rely on that file.

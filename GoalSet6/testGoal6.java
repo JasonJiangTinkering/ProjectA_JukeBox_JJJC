@@ -36,9 +36,8 @@ public class testGoal6 extends Application {
     public void start(Stage primaryStage) {
 
         // basic setup of the core classes
-        player = new SongPlayer();
-        songList = new SongList("songs.txt");
         balance = new balanceBox();
+        songList = new SongList("songs.txt");
         queue = new purchaseQueue(songList, balance);
 
         // main layout
@@ -91,27 +90,27 @@ public class testGoal6 extends Application {
         bottomBar.setAlignment(Pos.CENTER_LEFT);
 
         nowPlayingLabel = new Label("Now Playing: (none)");
+        player = new SongPlayer(queue, nowPlayingLabel);
+
 
         Button enqueueButton = new Button("Enqueue");
         Button enqueueFrontButton = new Button("Enqueue Front");
 
-        Button addDollarButton = new Button("Dollar Coin");
-        Button addHalfDollarButton = new Button("Half Dollar Coin");
-        Button addQuarterButton = new Button("Quarter Coin");
-        Button addDimeButton = new Button("Dime Coin");
-        Button addNickelButton = new Button("Nickel Coin");
-        Button addPennyButton = new Button("Penny Coin");
-        Button refundButton = new Button("Refund Coins");
-
-        Button addCoinButton = new Button("Add Coin");
-        Button addCreditButton = new Button("Add Credit");
+        Button addDollarButton = new Button("Dollar-Coin");
+        Button addHalfDollarButton = new Button("Half-Dollar-Coin");
+        Button addQuarterButton = new Button("Quarter-Coin");
+        Button addDimeButton = new Button("Dime-Coin");
+        Button addNickelButton = new Button("Nickel-Coin");
+        Button addPennyButton = new Button("Penny-Coin");
+        Button refundButton = new Button("Refund");
+        Button addCreditButton = new Button("$5-Credit");
 
         // basic button behavior for now (Goal 5 level)
         // when user clicks Enqueue, try to add the selected song to the queue
         enqueueButton.setOnAction(e -> {
             int selectedIndex = songListView.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0) {
-                boolean ok = queue.addSong(selectedIndex);
+                boolean ok = queue.addSong(selectedIndex, false);
                 if (player.start_queue()){
                     System.out.println("start queue ");
                 }else{
@@ -122,13 +121,35 @@ public class testGoal6 extends Application {
                 System.out.println(queue.displayQueue());
                 // for Goal 5: just update the label to show whichever song was last selected
                 String selectedText = songListView.getSelectionModel().getSelectedItem();
-                nowPlayingLabel.setText("Now Playing: " + selectedText);
+                nowPlayingLabel.setText(selectedText + " enqueued to Back\n" + "Now Playing: "+queue.getPlayingSongName()+"\n" + queue.displayQueue());
+
+                
                 
             } else {
                 System.out.println("No song selected to enqueue.");
+                nowPlayingLabel.setText("No song selected to enqueue.");
             }
         });
+        enqueueFrontButton.setOnAction(e -> {
+            int selectedIndex = songListView.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0) {
+                boolean ok = queue.addSong(selectedIndex, true);
+                if (player.start_queue()){
+                    System.out.println("start queue ");
+                }else{
+                System.out.println("Could not start queue .");
 
+                }
+                System.out.println("Enqueue clicked for index: " + selectedIndex + ", success=" + ok);
+                System.out.println(queue.displayQueue());
+                // for Goal 5: just update the label to show whichever song was last selected
+                String selectedText = songListView.getSelectionModel().getSelectedItem();
+                nowPlayingLabel.setText(selectedText + " enqueued to Front\n" + "Now Playing: "+queue.getPlayingSongName()+"\n" + queue.displayQueue());
+            } else {
+                System.out.println("No song selected to enqueue.");
+                nowPlayingLabel.setText("No song selected to enqueue.");
+            }
+        });
         // addCoinButton.setOnAction(e -> {
         //     System.out.println("Add Coin clicked");
         //     // For Goal 5, behavior can just be a stub print
@@ -137,22 +158,35 @@ public class testGoal6 extends Application {
 
         addDollarButton.setOnAction(e ->{
             balance.addCoin('g');
-            nowPlayingLabel.setText("Added Dollar Coin");
-            pause(1000);
             nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
-            
         });
-        enqueueFrontButton.setOnAction(e -> {
-            System.out.println("Enqueue Front clicked (not implemented yet).");
-            // Goal 5 does not require this to actually change the queue
+        addHalfDollarButton.setOnAction(e ->{
+            balance.addCoin('h');
+            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+        });
+        addQuarterButton.setOnAction(e ->{
+            balance.addCoin('q');
+            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+        });
+        addDimeButton.setOnAction(e ->{
+            balance.addCoin('d');
+            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+        });
+        addNickelButton.setOnAction(e ->{
+            balance.addCoin('n');
+            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+        });
+        addPennyButton.setOnAction(e ->{
+            balance.addCoin('p');
+            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
         });
 
         addCreditButton.setOnAction(e -> {
-            System.out.println("Add Credit clicked (not implemented yet).");
-            // Same as above: real logic is in Goal 6
+            balance.addFiveDollarCredit();
+            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
         });
         refundButton.setOnAction(e-> {
-            balance.returnFunds();
+            nowPlayingLabel.setText("Returned Balance: " +balance.returnFunds());
         });
 
         bottomBar.getChildren().addAll(
@@ -164,9 +198,9 @@ public class testGoal6 extends Application {
                 addDimeButton,
                 addNickelButton,
                 addPennyButton,
-                refundButton,
-                // addCoinButton,
-                addCreditButton
+                addCreditButton,
+                refundButton
+
         );
 
         root.setBottom(bottomBar);

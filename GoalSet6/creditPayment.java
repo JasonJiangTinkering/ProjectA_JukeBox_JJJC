@@ -23,7 +23,11 @@ public class creditPayment implements paymentLauncher{
         return amountInCents;
         
     }
-
+    public int takePayment(int amountInCents){
+        money += amountInCents;
+        return amountInCents;
+        
+    }
     public int subtractCertainBalance(int cost_in_cents){
         if (money >= cost_in_cents){
             money -= cost_in_cents;

@@ -16,6 +16,8 @@ public class purchaseQueue {
     
     private SongList songList;
     private balanceBox balance;
+
+    private String currentlyPlayingSongName;
     
     /**
      * Holds info about a song in the queue
@@ -48,6 +50,9 @@ public class purchaseQueue {
         this.balance = balance;
     }
 
+    String getPlayingSongName(){
+        return currentlyPlayingSongName;
+    }
 // For testing purposes, add song without testing balance.
     Boolean addSongForFree(int songIndex) {
         String[][] songArray = songList.getSongArray();
@@ -77,7 +82,7 @@ public class purchaseQueue {
      * @param songIndex which song to add (starts at 0)
      * @return true if added, false if not enough funds or bad index
      */
-    public boolean addSong(int songIndex) {
+    public boolean addSong(int songIndex, boolean addFrontTrue) {
         String[][] songArray = songList.getSongArray();
         
         // check if the song number is valid
@@ -102,11 +107,18 @@ public class purchaseQueue {
         
         // add the song to end of queue
         QueuedSong song = new QueuedSong(title, artist, cost, songIndex);
-        queue.addLast(song);
+        if (addFrontTrue){
+            queue.addFirst(song);
+        }else{
+            queue.addLast(song);
+        }
+        
         
         System.out.println("Added to queue: " + title + " by " + artist + " ($" + cost + ")");
         return true;
     }
+
+    
     
     /**
      * Removes a song from the queue at a specific position
@@ -146,6 +158,8 @@ public class purchaseQueue {
         // get the URI for this song
         URI songURI = songList.getSongURI(nextSong.songIndex);
         
+        currentlyPlayingSongName = nextSong.title;
+
         System.out.println("Now playing: " + nextSong.title + " by " + nextSong.artist);
         return songURI;
     }

@@ -84,7 +84,7 @@ public class testGoal5 extends Application {
         root.setCenter(songListView);
 
         // bottom: now playing + buttons
-        HBox bottomBar = new HBox(10);
+        HBox bottomBar = new HBox(20);
         bottomBar.setPadding(new Insets(5));
         bottomBar.setAlignment(Pos.CENTER_LEFT);
 
@@ -100,7 +100,7 @@ public class testGoal5 extends Application {
         enqueueButton.setOnAction(e -> {
             int selectedIndex = songListView.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0) {
-                boolean ok = queue.addSong(selectedIndex);
+                boolean ok = queue.addSong(selectedIndex, false);
                 System.out.println("Enqueue clicked for index: " + selectedIndex + ", success=" + ok);
                 System.out.println(queue.displayQueue());
                 // for Goal 5: just update the label to show whichever song was last selected
@@ -109,12 +109,6 @@ public class testGoal5 extends Application {
             } else {
                 System.out.println("No song selected to enqueue.");
             }
-        });
-
-        addCoinButton.setOnAction(e -> {
-            System.out.println("Add Coin clicked");
-            // For Goal 5, behavior can just be a stub print
-            // Later goals: hook this into balanceBox for real payments
         });
 
         enqueueFrontButton.setOnAction(e -> {

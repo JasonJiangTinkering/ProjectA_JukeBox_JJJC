@@ -44,6 +44,9 @@ public class balanceBox {
     public void addCoin(char c){
         total_available_cents += cashPaymentInst.takePayment(c);
     }
+    public void addFiveDollarCredit(){
+        total_available_cents += creditPaymentInst.takePayment(500);
+    }
 
     public void addFunds(){
         System.out.println("Add funds.\nType 1 + Enter for cash payment.\nType 2 + Enter for credit payment.\n:>");

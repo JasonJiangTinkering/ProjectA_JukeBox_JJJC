@@ -4,14 +4,18 @@ import java.io.File;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.util.Scanner;
+import javafx.scene.control.Label;
+
 // This java class is only a helpful class meant to be held by a running program
 public class SongPlayer{
     Media song;
     MediaPlayer mediaPlayer;
     purchaseQueue queue;
+    Label nowPlayingLabel;
     String songName;
-    public SongPlayer(purchaseQueue q){
+    public SongPlayer(purchaseQueue q, Label l){
         this.queue = q;
+        nowPlayingLabel = l;
     }
     
 // Idea of using recursion to generate media players over and over inspired by 
@@ -20,7 +24,7 @@ public class SongPlayer{
         if (queue.getQueueSize() > 0){
             popQueuePlaySong();
         }else{
-            System.out.println("End of Queue Thank you.");
+            nowPlayingLabel.setText("End of Queue Thank you.");
         }
 // not learned in class yet, the double colon operator, in the case of [A]::[B]
 // point at the method B in class A.
@@ -31,8 +35,10 @@ public class SongPlayer{
     public boolean start_queue(){
         if (mediaPlayer == null && queue.getQueueSize() >0){
             
-            return popQueuePlaySong();
+            popQueuePlaySong();
+            return true;
         }
+        return false;
     }
 
     public boolean popQueuePlaySong(){
@@ -41,7 +47,7 @@ public class SongPlayer{
             return false;
         }
         String x = queue.nextSong().toString();
-        System.out.println(x);
+        nowPlayingLabel.setText("Playing next song: "+x);
         song = new Media(x);
         mediaPlayer = new MediaPlayer(song);
         mediaPlayer.setAutoPlay(true);

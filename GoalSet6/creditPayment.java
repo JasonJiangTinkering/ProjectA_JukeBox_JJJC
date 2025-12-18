@@ -53,10 +53,13 @@ public class creditPayment implements paymentLauncher{
     
     /**
      * Creates string that shows the refund that you have  back to your card
+     * Also sets balance to 0
      * @return String
      */
     @Override
     public String returnFunds(){
-        return "Your credit balance is " + money + " cents";
+        String out = "Your credit balance is " + money + " cents";
+        money = 0 ;
+       return out;
     }
 }

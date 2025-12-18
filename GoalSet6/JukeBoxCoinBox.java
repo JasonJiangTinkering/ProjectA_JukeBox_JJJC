@@ -11,7 +11,7 @@ public class JukeBoxCoinBox {
 
     final private char acceptable_coin_chars[]={'p', 'n', 'd', 'q', 'h', 'g'};
     final private int acceptable_coin_vals[] = {1, 5, 10, 25, 50, 100};
-    final private int changeSet[] = {0,0,0,0,0,0};
+    private int changeSet[] = {0,0,0,0,0,0};
     /**
      * Returns amount in coins that coinBox has as part of the user's balance
      */
@@ -68,27 +68,24 @@ public class JukeBoxCoinBox {
 
         String outputStrings = "";
         int money = changeValue();
-        outputStrings += "Golden Dollars: " + Math.min(money / 100, changeSet[5]) + ", ";
-        money = money - (Math.min(money / 100, changeSet[5]) * 100);
-        changeSet[5] -= Math.min(money / 100, changeSet[5]);
-        outputStrings += "Half Dollars: " + Math.min(money / 50, changeSet[4]) + ", ";
-        money = money - (Math.min(money / 50, changeSet[4]) * 50);
-        changeSet[4] -= Math.min(money / 100, changeSet[4]);
-        outputStrings += "Quarter: " +  Math.min(money / 25, changeSet[3]) + ", ";
-        money = money - (Math.min(money / 25, changeSet[3]) * 25);
-        changeSet[3] -= Math.min(money / 100, changeSet[3]);
-        outputStrings += "Dime: " +  Math.min(money / 10, changeSet[2]) + ", ";
-        money = money - (Math.min(money / 10, changeSet[2]) * 10);
-        changeSet[2] -= Math.min(money / 100, changeSet[2]);
-        outputStrings += "Nickel: " +  Math.min(money / 5, changeSet[1]) + ", ";
-        money = money - (Math.min(money / 5, changeSet[1]) * 5);
-        changeSet[1] -= Math.min(money / 100, changeSet[1]);        
-        outputStrings += "Penny: " + Math.min(money, changeSet[0]) + ", ";
-        money = money - (Math.min(money / 1, changeSet[0]));
-        changeSet[0] -= Math.min(money / 100, changeSet[0]);
+        System.out.println(money);
+        outputStrings += "Golden Dollars: " + money / 100 + ", ";
+        money = money - (money / 100) * 100;
+        outputStrings += "Half Dollars: " + money / 50 + ", ";
+        money = money - (money / 50)*50;
+        outputStrings += "Quarter: " + money / 25 + ", ";
+        money = money - (money / 25)*25;
+        outputStrings += "Dime: " +  money / 10 + ", ";
+        money = money - (money / 10) * 10;
+        outputStrings += "Nickel: " + money / 5 + ", ";
+        money = money - (money / 5) * 5;
+        outputStrings += "Penny: " + money + ", ";
+        money = money - (money / 1);
         if (money >0){
             System.out.println("Could not dispense enough coins, IOU: " + money + " cents");
         }
+        money = 0;
+        changeSet = new int[6];
         return outputStrings;
     }
 }

@@ -36,18 +36,29 @@ public class balanceBox {
 
     }
 
+/**
+ * @return balance of user in cents
+ */
     public int get_available_cents(){
         return total_available_cents;
     }
         
-    
+   /** 
+    * Adds balance equal to coin
+    * Possible coins: 'p', 'n', 'd', 'q', 'h', 'g'
+    * */ 
     public void addCoin(char c){
         total_available_cents += cashPaymentInst.takePayment(c);
     }
+    /**
+     * Adds 500 cents to balance, simulating credit card swipe
+     */
     public void addFiveDollarCredit(){
         total_available_cents += creditPaymentInst.takePayment(500);
     }
-
+/**
+ * Prompts user to add cash or coins
+ */
     public void addFunds(){
         System.out.println("Add funds.\nType 1 + Enter for cash payment.\nType 2 + Enter for credit payment.\n:>");
         Scanner in = new Scanner(System.in);
@@ -64,7 +75,10 @@ public class balanceBox {
         }
         System.out.printf("Your balance is $%.2f%n", ((double)total_available_cents) /100);
     }
-
+/**
+ * @param cost_in_cents cents to deduct from user  balance
+ * @return true if deducted funds successful
+ */
     public Boolean deductFunds(int cost_in_cents){
         /* 
         if (total_available_cents >= cost_in_cents){

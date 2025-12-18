@@ -3,6 +3,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
@@ -28,9 +29,72 @@ public class testGoal6 extends Application {
     private balanceBox balance;
     private purchaseQueue queue;
     private SongPlayer player;
-
+    BorderPane root;
+    int[] sortedSongsIndexs;
     // label at the bottom to show which song is playing
     private Label nowPlayingLabel;
+    private Label moneyLeft;
+    ListView<String> songListView;
+    void bubbleSortInPlace(String[][]songItems, int[] sortedSongsIndexs, int heristic){
+        boolean sorted=false;
+        while (!sorted){
+            boolean roundsorted=true;
+            for (int i =0; i< sortedSongsIndexs.length-1; i++){
+                String w1 = songItems[sortedSongsIndexs[i]][heristic];
+                String w2 = songItems[sortedSongsIndexs[i+1]][heristic];
+                System.out.println(w1+w2);
+                for (int heristicCharacter = 0;heristicCharacter<Math.min(w1.length(), w2.length());heristicCharacter++){
+                    if (w1.charAt(heristicCharacter) < w2.charAt(heristicCharacter)){
+                        break;
+                    }
+                    if (w1.charAt(heristicCharacter) > w2.charAt(heristicCharacter)){
+                        System.out.println("Swapping");
+                        int temp = sortedSongsIndexs[i];
+                        sortedSongsIndexs[i] = sortedSongsIndexs[i+1];
+                        sortedSongsIndexs[i+1] = temp;
+                        roundsorted = false;
+                        break;
+                    }                            
+                }
+
+
+            }
+            sorted = roundsorted;
+        }
+
+    }
+
+    void renderSongs(int selectedIndex){
+
+        // center: list of songs
+        ObservableList<String> songItems = FXCollections.observableArrayList();
+
+        // get the raw String[][] from SongList
+        String[][] songs = songList.getSongArray();
+
+        // assuming each song row has [0]=title, [1]=artist
+        sortedSongsIndexs = new int[songs.length];
+        for (int i = 0; i < songs.length; i++) {
+            sortedSongsIndexs[i] = i;
+        }
+
+
+        bubbleSortInPlace(songs, sortedSongsIndexs, selectedIndex);
+
+        for (int i: sortedSongsIndexs){
+            if (songs[i] != null && songs[i][0] != null) {
+                String title = songs[i][0];
+                String artist = songs[i][1];
+                String cost = songs[i][2];
+                String entry = title + " - " + artist+ " - " + cost;
+                songItems.add(entry);
+            }
+        }
+
+        songListView = new ListView<>(songItems);
+        root.setCenter(songListView);
+        System.out.println("rendingSong");
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -41,7 +105,7 @@ public class testGoal6 extends Application {
         queue = new purchaseQueue(songList, balance);
 
         // main layout
-        BorderPane root = new BorderPane();
+        root = new BorderPane();
         root.setPadding(new Insets(10));
 
         // top: sort radio buttons
@@ -54,42 +118,33 @@ public class testGoal6 extends Application {
         // sort options (no real sorting yet, just the UI for Goal 5)
         RadioButton sortByTitle = new RadioButton("Title");
         sortByTitle.setToggleGroup(sortGroup);
+        sortByTitle.setOnAction(event->{
+            if(sortByTitle.isSelected())
+            renderSongs(0);
+        });
         sortByTitle.setSelected(true); // default
 
         RadioButton sortByArtist = new RadioButton("Artist");
         sortByArtist.setToggleGroup(sortGroup);
+        sortByArtist.setOnAction(event->{            
+            if(sortByArtist.isSelected())
+            renderSongs(1);
+        }); 
 
-        RadioButton sortByTime = new RadioButton("Time");
-        sortByTime.setToggleGroup(sortGroup);
-
-        topBar.getChildren().addAll(sortByTitle, sortByArtist, sortByTime);
+        topBar.getChildren().addAll(sortByTitle, sortByArtist);
         root.setTop(topBar);
+        renderSongs(0);
 
-        // center: list of songs
-        ObservableList<String> songItems = FXCollections.observableArrayList();
-
-        // get the raw String[][] from SongList
-        String[][] songs = songList.getSongArray();
-
-        // assuming each song row has [0]=title, [1]=artist, [2]=cost
-        for (int i = 0; i < songs.length; i++) {
-            if (songs[i] != null && songs[i][0] != null) {
-                String title = songs[i][0];
-                String artist = songs[i][1];
-                String entry = title + " - " + artist;
-                songItems.add(entry);
-            }
-        }
-
-        ListView<String> songListView = new ListView<>(songItems);
-        root.setCenter(songListView);
 
         // bottom: now playing + buttons
         HBox bottomBar = new HBox(10);
+        HBox bottomTopBar = new HBox(10);
+        VBox vBottomBar = new VBox(10);
         bottomBar.setPadding(new Insets(5));
         bottomBar.setAlignment(Pos.CENTER_LEFT);
 
         nowPlayingLabel = new Label("Now Playing: (none)");
+        moneyLeft = new Label("Money: 0");
         player = new SongPlayer(queue, nowPlayingLabel);
 
 
@@ -110,13 +165,14 @@ public class testGoal6 extends Application {
         enqueueButton.setOnAction(e -> {
             int selectedIndex = songListView.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0) {
-                boolean ok = queue.addSong(selectedIndex, false);
+                boolean ok = queue.addSong(sortedSongsIndexs[selectedIndex], true);
                 if (player.start_queue()){
                     System.out.println("start queue ");
                 }else{
-                System.out.println("Could not start queue .");
-
+                    System.out.println("Could not start queue .");
                 }
+                moneyLeft.setText("Money: "+balance.get_available_cents());
+                
                 System.out.println("Enqueue clicked for index: " + selectedIndex + ", success=" + ok);
                 System.out.println(queue.displayQueue());
                 // for Goal 5: just update the label to show whichever song was last selected
@@ -133,11 +189,13 @@ public class testGoal6 extends Application {
         enqueueFrontButton.setOnAction(e -> {
             int selectedIndex = songListView.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0) {
-                boolean ok = queue.addSong(selectedIndex, true);
+                
+                boolean ok = queue.addSong(sortedSongsIndexs[selectedIndex], true);
+
                 if (player.start_queue()){
                     System.out.println("start queue ");
                 }else{
-                System.out.println("Could not start queue .");
+                    System.out.println("Could not start queue .");
 
                 }
                 System.out.println("Enqueue clicked for index: " + selectedIndex + ", success=" + ok);
@@ -158,52 +216,55 @@ public class testGoal6 extends Application {
 
         addDollarButton.setOnAction(e ->{
             balance.addCoin('g');
-            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+            moneyLeft.setText("Balance: " +balance.get_available_cents());
         });
         addHalfDollarButton.setOnAction(e ->{
             balance.addCoin('h');
-            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+            moneyLeft.setText("Balance: " +balance.get_available_cents());
         });
         addQuarterButton.setOnAction(e ->{
             balance.addCoin('q');
-            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+            moneyLeft.setText("Balance: " +balance.get_available_cents());
         });
         addDimeButton.setOnAction(e ->{
             balance.addCoin('d');
-            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+            moneyLeft.setText("Balance: " +balance.get_available_cents());
         });
         addNickelButton.setOnAction(e ->{
             balance.addCoin('n');
-            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+            moneyLeft.setText("Balance: " +balance.get_available_cents());
         });
         addPennyButton.setOnAction(e ->{
             balance.addCoin('p');
-            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+            moneyLeft.setText("Balance: " +balance.get_available_cents());
         });
 
         addCreditButton.setOnAction(e -> {
             balance.addFiveDollarCredit();
-            nowPlayingLabel.setText("Balance: " +balance.get_available_cents());
+            moneyLeft.setText("Balance: " +balance.get_available_cents());
         });
         refundButton.setOnAction(e-> {
-            nowPlayingLabel.setText("Returned Balance: " +balance.returnFunds());
+            moneyLeft.setText("Returned Balance: " +balance.returnFunds());
         });
-
+        bottomTopBar.getChildren().addAll(
+            moneyLeft,
+            addDollarButton,
+            addHalfDollarButton,
+            addDimeButton,
+            addNickelButton,
+            addPennyButton
+        );
         bottomBar.getChildren().addAll(
-                nowPlayingLabel,
-                enqueueButton,
-                enqueueFrontButton,
-                addDollarButton,
-                addHalfDollarButton,
-                addDimeButton,
-                addNickelButton,
-                addPennyButton,
-                addCreditButton,
-                refundButton
+            nowPlayingLabel,
+            enqueueButton,
+            enqueueFrontButton,
+            addCreditButton,
+            refundButton
 
         );
+        vBottomBar.getChildren().addAll(bottomTopBar, bottomBar);
 
-        root.setBottom(bottomBar);
+        root.setBottom(vBottomBar);
 
         // scene and window setup
         Scene scene = new Scene(root, 1200, 600);

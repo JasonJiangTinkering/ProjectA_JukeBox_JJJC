@@ -12,29 +12,38 @@ public class SongPlayer{
     MediaPlayer mediaPlayer;
     purchaseQueue queue;
     Label nowPlayingLabel;
+    Boolean isPlaying = false;
     String songName;
     public SongPlayer(purchaseQueue q, Label l){
         this.queue = q;
         nowPlayingLabel = l;
     }
     
-// Idea of using recursion to generate media players over and over inspired by 
+// Idea of using callback to generate media players over and over inspired by 
 // stack overflow questionns 61296959
     public void endOfMediaNextSong(){
+        System.out.println("Finished song");
         if (queue.getQueueSize() > 0){
+        System.out.println("Sng Start");
+            
             popQueuePlaySong();
         }else{
+            isPlaying = false;
             nowPlayingLabel.setText("End of Queue Thank you.");
+
+            if (mediaPlayer != null){
+            mediaPlayer.dispose();
+            }
+        }
         }
 // not learned in class yet, the double colon operator, in the case of [A]::[B]
 // point at the method B in class A.
 // This is a callback funnction, so when the media player is over, it can call that function and boom new song.
         
-    }
+    
 
     public boolean start_queue(){
-        if (mediaPlayer == null && queue.getQueueSize() >0){
-            
+        if (!isPlaying && queue.getQueueSize() >0){
             popQueuePlaySong();
             return true;
         }
@@ -42,12 +51,13 @@ public class SongPlayer{
     }
 
     public boolean popQueuePlaySong(){
+        isPlaying = true;
         if (mediaPlayer != null){
             mediaPlayer.dispose();
-            return false;
         }
         String x = queue.nextSong().toString();
-        nowPlayingLabel.setText("Playing next song: "+x);
+        nowPlayingLabel.setText("Now Playing: "+queue.getPlayingSongName()+"\n" + queue.displayQueue());
+        System.out.println("Playing next song: "+x);
         song = new Media(x);
         mediaPlayer = new MediaPlayer(song);
         mediaPlayer.setAutoPlay(true);

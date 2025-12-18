@@ -6,6 +6,13 @@ import javafx.stage.Stage;
 import java.util.Scanner;
 import javafx.scene.control.Label;
 
+/**
+ * 
+ * Holds the song player that plays media for the jukebox 
+ * 
+ * @author Jason Jiang
+ * @version 1.0
+ * */
 // This java class is only a helpful class meant to be held by a running program
 public class SongPlayer{
     Media song;
@@ -21,6 +28,10 @@ public class SongPlayer{
     
 // Idea of using callback to generate media players over and over inspired by 
 // stack overflow questionns 61296959
+/**
+ * This function gets run when the media is done playing, tries to play the next song on the queue
+ * 
+ */
     public void endOfMediaNextSong(){
         System.out.println("Finished song");
         if (queue.getQueueSize() > 0){
@@ -41,7 +52,10 @@ public class SongPlayer{
 // This is a callback funnction, so when the media player is over, it can call that function and boom new song.
         
     
-
+/**
+ * This attempts to start playing from the queue, but only if the media is not already playing
+ * @return boolean, wether it was successful in starting the media playing from queue.
+ */
     public boolean start_queue(){
         if (!isPlaying && queue.getQueueSize() >0){
             popQueuePlaySong();
@@ -50,6 +64,10 @@ public class SongPlayer{
         return false;
     }
 
+/**This is the main way this player plays media, and updates the ui to show that media is playing.
+ * 
+ * @return weather its playing or not
+ */
     public boolean popQueuePlaySong(){
         isPlaying = true;
         if (mediaPlayer != null){

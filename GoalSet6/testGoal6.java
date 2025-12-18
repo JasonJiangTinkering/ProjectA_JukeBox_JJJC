@@ -15,11 +15,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * Goal 5 - JavaFX GUI for the Jukebox project.
- * Sets up the main window and starts wiring in
- * the classes from the earlier goals.
- *
- * @author Joel Cipher
+ * Goal 6 - JavaFX GUI for the Jukebox project.
+ * Implements sorting, song playing, and payment system
+ * @author Jason Jiang
  * @version 1.0
  */
 public class testGoal6 extends Application {
@@ -63,7 +61,11 @@ public class testGoal6 extends Application {
         }
 
     }
-
+/**
+ * Internal function that gets called when the list of songs needs to be regenerated after sorting on different param.
+ * @param selectedIndex, the attribute of the song to sort betwee
+ * 0-> is the song title, 1-> artist name
+ */
     void renderSongs(int selectedIndex){
 
         // center: list of songs

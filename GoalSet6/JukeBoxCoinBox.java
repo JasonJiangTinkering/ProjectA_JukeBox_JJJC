@@ -12,6 +12,9 @@ public class JukeBoxCoinBox {
     final private char acceptable_coin_chars[]={'p', 'n', 'd', 'q', 'h', 'g'};
     final private int acceptable_coin_vals[] = {1, 5, 10, 25, 50, 100};
     final private int changeSet[] = {0,0,0,0,0,0};
+    /**
+     * Returns amount in coins that coinBox has as part of the user's balance
+     */
     public int changeValue(){
         int acc = 0;
         for (int i = 0; i < changeSet.length; i++){
@@ -19,13 +22,20 @@ public class JukeBoxCoinBox {
         }
         return acc;
     }
-
+    /**
+     * Holds info about the amount of coins the current user has as part of balance.
+     */
     public JukeBoxCoinBox(){
         for (int i = 0; i < changeSet.length; i++){{
             changeSet[i] = 0;
         }}
     }
-
+    /**
+     * Accepts coin and returns a changed balance
+     * able to accept: 'p', 'n', 'd', 'q', 'h', 'g'
+     * @param coinType the  coin  thats  being added
+     * @return the new balance after adding coin
+     */
     public int acceptCoin(char coinType){
         for (int i =0; i < acceptable_coin_chars.length; i++){
             if  (acceptable_coin_chars[i] == coinType){
@@ -36,7 +46,11 @@ public class JukeBoxCoinBox {
         System.out.println("Please enter a valid coin.");
         return 0;
     }
-
+    /**
+     * subtractCertainBalance takes away correct amount of coins from the coin box
+     * @param cents_in_cents
+     * @return modified balance
+     */
     public int subtractCertainBalance(int cost_in_cents){
         int startingValue = cost_in_cents;
         for (int i = 0; i < changeSet.length; i++){
@@ -46,6 +60,10 @@ public class JukeBoxCoinBox {
         }
         return startingValue-cost_in_cents;
     }
+
+    /**
+     * Returns string with the amount of coins that are being dispensed to make up for the balance that is left over. 
+     */
     public String dispenseChange(){
 
         String outputStrings = "";

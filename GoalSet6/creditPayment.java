@@ -8,6 +8,10 @@ import java.util.Scanner;
 
 public class creditPayment implements paymentLauncher{
     int money = 0;
+    /**
+     * Prompts user to add ccredit card balance
+     * @return new balance  in cents.
+     */
     @Override
     public int takePayment(){
         Scanner in = new Scanner(System.in);
@@ -23,11 +27,22 @@ public class creditPayment implements paymentLauncher{
         return amountInCents;
         
     }
+
+    /**
+     * Replicates a credit card swipe
+     * @param amountInCents amount of cents to add to balance
+     * @return new balance after credit card charge
+     */
     public int takePayment(int amountInCents){
         money += amountInCents;
         return amountInCents;
         
     }
+    /**
+     * Replicates a charge to the balance of the card
+     * @param cost_in_cents card charge to the credit card balance
+     
+     */
     public int subtractCertainBalance(int cost_in_cents){
         if (money >= cost_in_cents){
             money -= cost_in_cents;
@@ -36,6 +51,10 @@ public class creditPayment implements paymentLauncher{
         return money;
     }
     
+    /**
+     * Creates string that shows the refund that you have  back to your card
+     * @return String
+     */
     @Override
     public String returnFunds(){
         return "Your credit balance is " + money + " cents";

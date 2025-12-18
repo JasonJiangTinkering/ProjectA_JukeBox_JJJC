@@ -99,6 +99,9 @@ public class purchaseQueue {
         // NOTE: balance uses cents so need to convert
         int costInCents = (int)(cost * 100);
         
+        if (addFrontTrue){
+            costInCents += 50;
+        }
         // try to deduct the cost
         if (!balance.deductFunds(costInCents)) {
             System.out.println("Not enough money to buy: " + title);

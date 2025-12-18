@@ -88,7 +88,7 @@ public class testGoal6 extends Application {
                 String title = songs[i][0];
                 String artist = songs[i][1];
                 String cost = songs[i][2];
-                String entry = title + " - " + artist+ " - " + cost;
+                String entry = title + " - " + artist+ " - Cost To queue: " + cost +"- Cost to play next: " + (Double.parseDouble(cost) +0.50) ;
                 songItems.add(entry);
             }
         }
@@ -167,7 +167,7 @@ public class testGoal6 extends Application {
         enqueueButton.setOnAction(e -> {
             int selectedIndex = songListView.getSelectionModel().getSelectedIndex();
             if (selectedIndex >= 0) {
-                boolean ok = queue.addSong(sortedSongsIndexs[selectedIndex], true);
+                boolean ok = queue.addSong(sortedSongsIndexs[selectedIndex], false);
                 if (player.start_queue()){
                     System.out.println("start queue ");
                 }else{
@@ -179,6 +179,11 @@ public class testGoal6 extends Application {
                 System.out.println(queue.displayQueue());
                 // for Goal 5: just update the label to show whichever song was last selected
                 String selectedText = songListView.getSelectionModel().getSelectedItem();
+                
+                if (!ok){
+                    nowPlayingLabel.setText("Could not pay for song\n" + "Now Playing: "+queue.getPlayingSongName()+"\n" + queue.displayQueue());
+                    return;
+                }
                 nowPlayingLabel.setText(selectedText + " enqueued to Back\n" + "Now Playing: "+queue.getPlayingSongName()+"\n" + queue.displayQueue());
 
                 
@@ -203,6 +208,11 @@ public class testGoal6 extends Application {
                 System.out.println("Enqueue clicked for index: " + selectedIndex + ", success=" + ok);
                 System.out.println(queue.displayQueue());
                 // for Goal 5: just update the label to show whichever song was last selected
+                
+                 if (!ok){
+                    nowPlayingLabel.setText("Could not pay for song\n" + "Now Playing: "+queue.getPlayingSongName()+"\n" + queue.displayQueue());
+                    return;
+                }
                 String selectedText = songListView.getSelectionModel().getSelectedItem();
                 nowPlayingLabel.setText(selectedText + " enqueued to Front\n" + "Now Playing: "+queue.getPlayingSongName()+"\n" + queue.displayQueue());
             } else {

@@ -6,6 +6,18 @@ Requirements
 How to run GUI:
 - Build or use testGoal5.jar
 - Run:
+java --module-path "<your-path>/javafx-sdk-21.0.9/lib" --add-modules=javafx.controls,javafx.media -jar testGoal6.jar songs.txt
+
+
+
+Goal set #5
+Requirements
+1. JavaFX SDK configured (e.g., PATH_TO_FX or module-path to javafx-sdk-21.0.9/lib).
+2. songs.txt present in the same folder as the JAR (used by SongList).
+
+How to run GUI:
+- Build or use testGoal5.jar
+- Run:
 java --module-path "<your-path>/javafx-sdk-21.0.9/lib" --add-modules=javafx.controls,javafx.media -jar testGoal5.jar
 
 What this Goal 5 GUI does:

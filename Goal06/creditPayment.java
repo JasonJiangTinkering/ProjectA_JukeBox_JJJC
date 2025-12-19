@@ -8,6 +8,12 @@ import java.util.Scanner;
 
 public class creditPayment implements paymentLauncher{
     int money = 0;
+
+    /**
+     * Holds and  updates credit balance
+     */
+    public creditPayment(){}
+
     /**
      * Prompts user to add ccredit card balance
      * @return new balance  in cents.
@@ -41,7 +47,7 @@ public class creditPayment implements paymentLauncher{
     /**
      * Replicates a charge to the balance of the card
      * @param cost_in_cents card charge to the credit card balance
-     
+    * @return updated credit user balance
      */
     public int subtractCertainBalance(int cost_in_cents){
         if (money >= cost_in_cents){

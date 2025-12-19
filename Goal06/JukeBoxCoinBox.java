@@ -13,7 +13,8 @@ public class JukeBoxCoinBox {
     final private int acceptable_coin_vals[] = {1, 5, 10, 25, 50, 100};
     private int changeSet[] = {0,0,0,0,0,0};
     /**
-     * Returns amount in coins that coinBox has as part of the user's balance
+     * Returns updated balance from coins that coinBox has as part of the user's balance
+     * @return updated users's coin balance
      */
     public int changeValue(){
         int acc = 0;
@@ -48,7 +49,7 @@ public class JukeBoxCoinBox {
     }
     /**
      * subtractCertainBalance takes away correct amount of coins from the coin box
-     * @param cents_in_cents
+     * @param cost_in_cents how much to take away from user balance
      * @return modified balance
      */
     public int subtractCertainBalance(int cost_in_cents){
@@ -62,7 +63,8 @@ public class JukeBoxCoinBox {
     }
 
     /**
-     * Returns string with the amount of coins that are being dispensed to make up for the balance that is left over. 
+     * Find out how many coins the machine should dispense
+     * @return string with the amount of coins that are being dispensed to make up for the balance that is left over. 
      */
     public String dispenseChange(){
 

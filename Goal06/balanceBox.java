@@ -10,7 +10,18 @@ public class balanceBox {
     private final cashPayment cashPaymentInst = new cashPayment();
     private final creditPayment creditPaymentInst = new creditPayment();
     private int total_available_cents = 0; 
-    
+
+/**
+ * Holds the correct money that the user has at the time, stores the instatnces that hold the credit card and cash balance.
+ */
+    public balanceBox(){
+
+    }
+
+    /**
+     * testing function
+     * @hidden 
+     */
     public static void main(String[] args) {
         balanceBox b = new balanceBox();
         System.out.println("Test 1: That add and deduct funds were working. Trying to reach 300");
@@ -37,6 +48,7 @@ public class balanceBox {
     }
 
 /**
+ * returns balance of user in cents
  * @return balance of user in cents
  */
     public int get_available_cents(){
@@ -46,6 +58,7 @@ public class balanceBox {
    /** 
     * Adds balance equal to coin
     * Possible coins: 'p', 'n', 'd', 'q', 'h', 'g'
+    * @param c character that matches a  possible coin
     * */ 
     public void addCoin(char c){
         total_available_cents += cashPaymentInst.takePayment(c);
@@ -76,6 +89,8 @@ public class balanceBox {
         System.out.printf("Your balance is $%.2f%n", ((double)total_available_cents) /100);
     }
 /**
+ * deducts funds from user balance, does not take away funds from the coin or credit balance
+ * Just the overall count, that is relied  upon by other classes
  * @param cost_in_cents cents to deduct from user  balance
  * @return true if deducted funds successful
  */

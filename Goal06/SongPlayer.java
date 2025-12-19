@@ -21,6 +21,11 @@ public class SongPlayer{
     Label nowPlayingLabel;
     Boolean isPlaying = false;
     String songName;
+    /**Plays songs from queue when asked 
+     * @param q the queue we are pulling from
+     * @param l the label that is our outputting the status messages
+    */
+
     public SongPlayer(purchaseQueue q, Label l){
         this.queue = q;
         nowPlayingLabel = l;

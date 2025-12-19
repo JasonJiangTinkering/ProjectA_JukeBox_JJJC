@@ -294,14 +294,4 @@ public class testGoal6 extends Application {
     }
 
 
-    // Useful compartmentization for interupt exception 
-    // Got from stack overflow
-    // question 24104313, how do i make a delay in java
-    public static void pause(int ms){
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e){
-            System.err.format("InterruptedException : %s%n", e);
-        }
-    }
 }

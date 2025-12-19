@@ -80,6 +80,7 @@ public class purchaseQueue {
     /**
      * Adds a song to the queue if there's enough money
      * @param songIndex which song to add (starts at 0)
+     * @param addFrontTrue wether the song should be added to front or back of queue
      * @return true if added, false if not enough funds or bad index
      */
     public boolean addSong(int songIndex, boolean addFrontTrue) {

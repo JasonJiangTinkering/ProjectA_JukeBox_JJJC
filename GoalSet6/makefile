@@ -2,7 +2,11 @@
 # Make sure to run makefile with your own .env file
 include .env
 
+cleanJavaDoc:
+	rm -r ../docs/*
 
+goalset6_javadoc:
+	javadoc --module-path ${sdkPath}/lib --add-modules javafx.controls,javafx.media,javafx.graphics *.java -linksource -d ../docs
 goalset6_runjava: goalset6_compilejava testGoal6.class 
 	java --module-path ${sdkPath}/lib --add-modules javafx.controls,javafx.media,javafx.graphics testGoal6 songs.txt
 
